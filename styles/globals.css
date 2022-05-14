@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.input{
+    @apply my-2; 
+}
+
+.containerLogo{
+    @apply hidden md:block w-[50%] bg-[url('/assets/photo.jpg')] bg-center bg-no-repeat bg-cover;
+}
+
+.magicoLogo{
+    @apply w-full flex md:w-[50%] bg-[url('/assets/photo.jpg')] bg-center bg-no-repeat bg-cover md:bg-none justify-center items-center;
+}
+
+.logo-mobile{
+    @apply absolute top-10 md:hidden 
+}
