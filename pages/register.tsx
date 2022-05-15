@@ -1,18 +1,21 @@
 import type { NextPage } from 'next'
 import Link from 'next/link';
 import { useForm, SubmitHandler } from "react-hook-form";
-import {AiFillEye} from 'react-icons/ai'
+
 import { yupResolver } from '@hookform/resolvers/yup';
-import LoginError from '../components/errors/login.error';
 import UserModel from '../models/user.model';
 import CreateUserSchema from '../schemas/create-user.schema';
 import BodyStruct from '../components/structs/page.struct';
-import Image from 'next/image';
+import FieldPasswordInput from '../components/inputsFields/field-password.input';
+import FieldInput from '../components/inputsFields/field.imput';
+import NumberFieldInput from '../components/inputsFields/field-number.input';
+import AppError from '../components/errors/app.error';
 
 
 
 const Register: NextPage = () => {
-    const { register, handleSubmit, watch, getValues, formState: { errors } } = useForm<UserModel>(
+
+    const { register, handleSubmit, formState } = useForm<UserModel>(
         {
           defaultValues: {
             name:"",
@@ -20,7 +23,7 @@ const Register: NextPage = () => {
             email:"",
             number:"",
             repeatPassword:"",
-            notify:"sim",
+            notify:'yes',
           },
           resolver: yupResolver(CreateUserSchema)
         }
@@ -35,47 +38,16 @@ const Register: NextPage = () => {
             <h2 className='titleCard color-text-title'>Cadastre-se</h2>
               <form onSubmit={handleSubmit(onSubmit)}>
 
-              <div className={'flex flex-col justify-center input'} >
-                  <label className={ errors.name? 'text-red-500': 'color-text-title'}>Nome</label>
-                  <input className={'border-2 w-full'} {... register("name") } />
-              </div> 
-
-              <div className={'flex flex-col justify-center input'} >
-                  <label className={ errors.email? 'text-red-500': 'color-text-title'}>E-mail</label>
-                  <input className={'border-2 w-full'} {... register("email") } />
-              </div>
-
-               <div className={'flex flex-col justify-center input'} >
-                  <label className={ errors.number? 'text-red-500': 'color-text-title'}>Número</label>
-                   <div className={'relative'}>
-                   <div className={'absolute flex items-center top-1'}> 
-                   <Image className={'mx-2'}  src={'/assets/brazil.svg'} width={20} height={20} alt="logo" />
-                    <select className={'mx-2 bg-transparent'}>
-                        <option>++ 55 </option>
-                    </select>
-                   </div>
-                  <input className={'border-2 w-full pl-[50%]'} {... register("number") } />
-                   </div>
-              </div>  
+              <FieldInput model={'name'} label={'Nome'} errors={formState.errors.name} register={register}/>
+              <FieldInput model={'email'} label={'E-mail'} errors={formState.errors.email} register={register}/>
+              <NumberFieldInput model={'number'} errors={formState.errors.number} register={register} /> 
     
-              <div className={'flex flex-col justify-center input'} >
-                  <label className={ errors.password? 'text-red-500': 'color-text-title'}>Senha</label>
-                  <div className={'relative'}>
-                  <AiFillEye className={'absolute right-2 top-[20%] color-text-title'} />
-                  <input className={'border-2 w-full'} type={'password'} {... register('password')} />
-                  </div>
-              </div> 
-              <div className={'flex flex-col justify-center input'} >
-                  <label className={ errors.repeatPassword? 'text-red-500': 'color-text-title'}>Repitir Senha</label>
-                  <div className={'relative'}>
-                  <AiFillEye className={'absolute right-2 top-[20%] color-text-title'} />
-                  <input className={'border-2 w-full'} type={'password'} {... register('repeatPassword')} />
-                  </div>
-              </div> 
+              <FieldPasswordInput model={"password"} errors={formState.errors.password} label={'Senha'} register={register}/>
+              <FieldPasswordInput model={'repeatPassword'} errors={formState.errors.repeatPassword} label={'Repitir Senha'} register={register}/>
 
               <div className={'flex flex-row mx-2 my-3 justify-center '} >
               <input  type={'checkbox'} {... register('acceptTerms')}/>
-                <p className={errors.acceptTerms? 'text-[10px] mx-2 text-red-500' : 'text-[10px] mx-2'} > Eu li e aceito a politica de privacidade da Disparo Pro Termos de privacidade</p>
+                <p className={formState.errors.acceptTerms? 'text-[10px] mx-2 text-red-500' : 'text-[10px] mx-2'} > Eu li e aceito a politica de privacidade da Disparo Pro Termos de privacidade</p>
                 </div>
                 
                 <div className={'flex flex-col mx-2 my-3 justify-center'} >
@@ -85,14 +57,14 @@ const Register: NextPage = () => {
                   <div className={'mx-4'}>
                 <label className={'text-[10px]'}>
 
-                <input className={'mx-1'} type="radio" {... register('notify')} name="notify" value="sim"  />
+                <input className={'mx-1'} type="radio" {... register('notify')} name="notify" value="yes"  />
                 Sim
                 </label>
                   </div>
                   <div className={'mx-4'}>
                    
                 <label className={'text-[10px]'} >
-                <input className={'mx-1'}  type="radio"   {... register('notify')} name="notify" value="nao"  />
+                <input className={'mx-1'}  type="radio"   {... register('notify')} name="notify" value="no"  />
                 Não
                 </label>
                   </div>
@@ -109,8 +81,9 @@ const Register: NextPage = () => {
                     <a className={'color-text-title text-xs'}>Fazer Login</a>
                   </Link>
                 </div>
-    
-              { (errors.name && errors.password) &&  <LoginError/>}
+
+                
+              
               </form>
               </>
         </BodyStruct>
