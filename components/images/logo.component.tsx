@@ -1,8 +1,13 @@
 import Image from 'next/image';
 
-const LogoImg = ()=>{
+interface Props{
+    width: number;
+    height: number;
+}
+
+const LogoImg = (props:Props)=>{
     return (
-    <Image src={'/assets/disparopro.svg'} width='200' height="70" alt="logo" />
+    <Image src={'/assets/disparopro.svg'} width={props.width} height={props.height} alt="logo" />
     );
 }
 

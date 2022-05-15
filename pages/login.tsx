@@ -3,7 +3,6 @@ import Link from 'next/link'
 import { useForm, SubmitHandler } from "react-hook-form";
 import {AiFillEye} from 'react-icons/ai'
 import { yupResolver } from '@hookform/resolvers/yup';
-import LogoImg from '../components/images/logo.component';
 import LoginError from '../components/errors/login.error';
 import LoginModel from '../models/login.model';
 import LoginSchema from '../schemas/login.schema';

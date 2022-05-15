@@ -7,6 +7,7 @@ const CreateUserSchema = yup.object({
     number: yup.string().required('Necessário Celular'),
     password: yup.string().required('Necessário Senha'),
     repeatPassword:yup.string().required('Necessário Repedir Senha'),
+    acceptTerms: yup.bool().oneOf([true], 'Accept Ts & Cs is required')
   }).required();
 
   export default CreateUserSchema;
