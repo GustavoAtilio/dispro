@@ -7,7 +7,7 @@ type UserModel = {
     password:string;
     repeatPassword: string;
     acceptTerms: boolean;
-    notify:boolean;
+    notify:string;
   };
 
 export default UserModel;

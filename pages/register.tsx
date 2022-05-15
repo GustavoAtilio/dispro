@@ -7,11 +7,12 @@ import LoginError from '../components/errors/login.error';
 import UserModel from '../models/user.model';
 import CreateUserSchema from '../schemas/create-user.schema';
 import BodyStruct from '../components/structs/page.struct';
+import Image from 'next/image';
 
 
 
 const Register: NextPage = () => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<UserModel>(
+    const { register, handleSubmit, watch, getValues, formState: { errors } } = useForm<UserModel>(
         {
           defaultValues: {
             name:"",
@@ -19,7 +20,7 @@ const Register: NextPage = () => {
             email:"",
             number:"",
             repeatPassword:"",
-            notify:false,
+            notify:"sim",
           },
           resolver: yupResolver(CreateUserSchema)
         }
@@ -46,7 +47,15 @@ const Register: NextPage = () => {
 
                <div className={'flex flex-col justify-center input'} >
                   <label className={ errors.number? 'text-red-500': 'color-text-title'}>Número</label>
-                  <input className={'border-2 w-full'} {... register("number") } />
+                   <div className={'relative'}>
+                   <div className={'absolute flex items-center top-1'}> 
+                   <Image className={'mx-2'}  src={'/assets/brazil.svg'} width={20} height={20} alt="logo" />
+                    <select className={'mx-2 bg-transparent'}>
+                        <option>++ 55 </option>
+                    </select>
+                   </div>
+                  <input className={'border-2 w-full pl-[50%]'} {... register("number") } />
+                   </div>
               </div>  
     
               <div className={'flex flex-col justify-center input'} >
@@ -71,29 +80,36 @@ const Register: NextPage = () => {
                 
                 <div className={'flex flex-col mx-2 my-3 justify-center'} >
                 <p className={'text-[10px] mx-2'} > Quero receber ofertas,novidades, conteúdos informativos e publicitários da Disparo Pro</p>
+                
                 <div className={'flex flex-row justify-center'}>
                   <div className={'mx-4'}>
-                <input className={'mx-1'} type="radio"  {... register('notify' ,{required:true})}/>
-                <label className={'text-[10px]'}>Sim</label>
+                <label className={'text-[10px]'}>
+
+                <input className={'mx-1'} type="radio" {... register('notify')} name="notify" value="sim"  />
+                Sim
+                </label>
                   </div>
                   <div className={'mx-4'}>
-                <input className={'mx-1'}  type="radio"   {... register('notify' ,{required:false})}/>
-                <label className={'text-[10px]'} >Não</label>
+                   
+                <label className={'text-[10px]'} >
+                <input className={'mx-1'}  type="radio"   {... register('notify')} name="notify" value="nao"  />
+                Não
+                </label>
                   </div>
                 </div>
                 </div>
-    
+                
               <div className={'flex justify-center'}>
                   <button className={'buttonCard'} type={'submit'} >Cadastrar</button>
                 </div>
-          
+               
                 <div className={'flex flex-col items-center my-2'} > 
                   <p className={'text-[10px]'}>Você já é cliente Disparo Pro ?</p>
                   <Link href="/login">
                     <a className={'color-text-title text-xs'}>Fazer Login</a>
                   </Link>
-    
                 </div>
+    
               { (errors.name && errors.password) &&  <LoginError/>}
               </form>
               </>
