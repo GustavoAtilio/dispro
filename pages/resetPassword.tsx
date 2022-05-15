@@ -32,7 +32,7 @@ const ResetPassword: NextPage = () => {
           
           <FieldInput model={'email'} label={'E-mail'} errors={formState.errors.email} register={register}/>
           <ButtonCard title={'Enviar'}/>
-          {!formState.errors.email && <AppError msg={'E-mail Invalido.'}/> };
+          {formState.errors.email && <AppError msg={'E-mail Invalido.'}/> }
           
           </form>
           </>
