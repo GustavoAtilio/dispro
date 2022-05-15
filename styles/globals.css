@@ -11,10 +11,18 @@
     @apply hidden md:block w-[50%] bg-[url('/assets/photo.jpg')] bg-center bg-no-repeat bg-cover;
 }
 
-.magicoLogo{
+.containerCard{
     @apply w-full flex md:w-[50%] bg-[url('/assets/photo.jpg')] bg-center bg-no-repeat bg-cover md:bg-none justify-center items-center;
 }
 
 .logo-mobile{
-    @apply absolute top-10 md:hidden 
+    @apply absolute top-2 md:hidden 
+}
+
+.titleCard{
+    @apply my-5 bg-clip-text text-transparent bg-gradient-to-b from-sky-500 to-sky-900 font-bold text-3xl text-center;
+}
+
+.buttonCard{
+    @apply border-2 bg-blue-500 text-white text-center py-3 px-10 rounded-[10px];
 }
